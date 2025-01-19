@@ -1,0 +1,25 @@
+# Системные файлы операционных систем
+.DS_Store
+Thumbs.db
+
+# Python файлы кеша
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Виртуальные окружения
+venv/
+.env/
+
+# Данные
+data/*.csv
+*.json
+
+# Файлы Jupyter Notebook, которые генерируют временные файлы
+.ipynb_checkpoints/
+
+# Установка Streamlit
+.streamlit/
+
+# Логи и временные файлы Streamlit
+logs/
