@@ -29,7 +29,7 @@ SUPERMARKET_SALES_DASH
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/your_username/supermarket_sales_dash.git
+   git clone https://github.com/sheather666/supermarket_sales_dash.git
    cd supermarket_sales_dash
    ```
 
@@ -44,12 +44,7 @@ SUPERMARKET_SALES_DASH
    pip install -r requirements.txt
    ```
 
-4. Настройте PostgreSQL и создайте базу данных, выполнив скрипт `create_db.sql`:
-   ```bash
-   psql -U postgres -f scripts/create_db.sql
-   ```
-
-5. Загрузите данные в базу:
+4. Загрузите данные в базу и выполните SQL-скрипты:
    ```bash
    python scripts/load_data.py
    ```
@@ -86,7 +81,3 @@ SUPERMARKET_SALES_DASH
 ## Зависимости
 
 Все зависимости перечислены в файле `requirements.txt`. Убедитесь, что PostgreSQL установлен и настроен на вашем устройстве.
-
-## Лицензия
-
-Этот проект распространяется под лицензией MIT. Для получения дополнительной информации ознакомьтесь с файлом LICENSE.
