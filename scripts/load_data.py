@@ -1,34 +1,10 @@
 import pandas as pd
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 
 # Настройки подключения к базе данных
 DATABASE_URI = 'postgresql://postgres:1234@localhost:5432/postgres'
 
-# Путь к SQL-файлу
-sql_file_path = './scripts/create_db.sql'
-
-# Подключение к базе данных
-engine = create_engine(DATABASE_URI)
-
-# Функция для выполнения SQL-файла
-def execute_sql_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        sql_commands = file.read()  # Считываем содержимое SQL-файла
-
-    with engine.connect() as connection:
-        trans = connection.begin()  # Начинаем транзакцию
-        try:
-            connection.execute(text(sql_commands))  # Выполняем SQL-команды
-            trans.commit()  # Подтверждаем изменения
-            print("SQL-файл успешно выполнен.")
-        except Exception as e:
-            trans.rollback()  # Откатываем изменения при ошибке
-            print(f"Ошибка при выполнении SQL-файла: {e}")
-
-# Выполняем SQL-скрипт
-execute_sql_file(sql_file_path)
-
-# Дальнейшие действия, например, загрузка данных
+# Путь к файлу CSV
 csv_file_path = './data/supermarket_data.csv'
 
 # Загрузка данных
@@ -50,17 +26,13 @@ data['quantity'] = data['quantity'].astype(int)
 data['total_amount'] = data['total_amount'].astype(float)
 data['discount'] = data['discount'].fillna(0).astype(float)
 
+# Подключение к базе данных
+engine = create_engine(DATABASE_URI)
+
 # Очистка таблицы перед загрузкой
 def truncate_table():
     with engine.connect() as connection:
-        trans = connection.begin()
-        try:
-            connection.execute(text("TRUNCATE TABLE supermarket_sales.sales RESTART IDENTITY CASCADE;"))
-            trans.commit()
-            print("Таблица успешно очищена.")
-        except Exception as e:
-            trans.rollback()
-            print(f"Ошибка при очистке таблицы: {e}")
+        connection.execute("TRUNCATE TABLE supermarket_sales.sales RESTART IDENTITY CASCADE;")
 
 truncate_table()
 

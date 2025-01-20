@@ -21,13 +21,16 @@ CREATE INDEX IF NOT EXISTS idx_receipt_number ON supermarket_sales.sales (receip
 CREATE INDEX IF NOT EXISTS idx_cashier_name ON supermarket_sales.sales (cashier_name);
 CREATE INDEX IF NOT EXISTS idx_product_name ON supermarket_sales.sales (product_name);
 
--- Представление: Общая выручка, количество продаж и средний чек
+-- Представление: Общая выручка, количество продаж и средний чек с учетом даты
 CREATE OR REPLACE VIEW supermarket_sales.sales_summary AS
 SELECT 
     SUM(total_amount) AS total_revenue,
     SUM(quantity) AS total_sales,
     AVG(total_amount / NULLIF(receipt_number::NUMERIC, 0)) AS avg_receipt
-FROM supermarket_sales.sales;
+FROM supermarket_sales.sales
+GROUP BY sale_date
+ORDER BY sale_date;
+
 
 -- Представление: Топ-10 товаров по количеству продаж
 CREATE OR REPLACE VIEW supermarket_sales.top_products AS
